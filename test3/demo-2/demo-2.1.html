@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Canvas Animation</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script>
+        // Global variables
+        var canvas;
+        var ctx;
+        var elements = [];
+        var colors = ["red", "green", "blue", "yellow", "purple"];
+        var mouseX = 0;
+        var mouseY = 0;
+
+        // Element class
+        class Element {
+            constructor(x, y, shape, color) {
+                this.x = x;
+                this.y = y;
+                this.shape = shape;
+                this.color = color;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+
+                if (this.shape === "rectangle") {
+                    ctx.fillRect(this.x, this.y, 50, 50);
+                } else if (this.shape === "circle") {
+                    ctx.beginPath();
+                    ctx.arc(this.x + 25, this.y + 25, 25, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (this.shape === "triangle") {
+                    ctx.beginPath();
+                    ctx.moveTo(this.x + 25, this.y);
+                    ctx.lineTo(this.x, this.y + 50);
+                    ctx.lineTo(this.x + 50, this.y + 50);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+            }
+
+            updateColor(newColor) {
+                this.color = newColor;
+            }
+        }
+
+        function init() {
+            canvas = document.getElementById("canvas");
+            ctx = canvas.getContext("2d");
+
+            // Create initial elements
+            for (var i = 0; i < 10; i++) {
+                var x = Math.random() * (canvas.width - 50);
+                var y = Math.random() * (canvas.height - 50);
+                var shape = getRandomShape();
+                var color = colors[Math.floor(Math.random() * colors.length)];
+                var element = new Element(x, y, shape, color);
+                elements.push(element);
+            }
+
+            // Set up mouse move event listener
+            canvas.addEventListener("mousemove", handleMouseMove);
+
+            // Start the animation loop
+            requestAnimationFrame(animate);
+        }
+
+        function handleMouseMove(event) {
+            var rect = canvas.getBoundingClientRect();
+            mouseX = event.clientX - rect.left;
+            mouseY = event.clientY - rect.top;
+        }
+
+        function getRandomShape() {
+            var shapes = ["rectangle", "circle", "triangle"];
+            return shapes[Math.floor(Math.random() * shapes.length)];
+        }
+
+        function animate() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Update and draw elements
+            elements.forEach(function(element) {
+                // Calculate distance between mouse and element
+                var dx = mouseX - (element.x + 25);
+                var dy = mouseY - (element.y + 25);
+                var distance = Math.sqrt(dx * dx + dy * dy);
+
+                // Change element color based on distance to mouse
+                if (distance < 100) {
+                    element.updateColor("orange");
+                } else {
+                    element.updateColor(element.color);
+                }
+
+                // Draw the element
+                element.draw();
+            });
+
+            // Request next animation frame
+            requestAnimationFrame(animate);
+        }
+
+        // Initialize the canvas and animation
+        init();
+    </script>
+</body>
+</html>

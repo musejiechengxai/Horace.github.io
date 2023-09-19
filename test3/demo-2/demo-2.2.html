@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  <style>
+    body {
+    background: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.animate {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+#sun {
+    background: #FFA500;
+    border-radius: 50%;
+    animation: spin 5s linear infinite;
+}
+
+#cloud {
+    background: #cc5544;
+    border-radius: 50%;
+    margin-top: 50px;
+    animation: float 3s ease-in-out infinite;
+}
+
+#bird {
+    background: #1E90FF;
+    border-radius: 50%;
+    margin-top: 100px;
+    animation: fly 2s ease-in-out infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes fly {
+    0% { transform: translateX(0px); }
+    50% { transform: translateX(20px); }
+    100% { transform: translateX(0px); }
+}
+  </style>
+</head>
+<body>
+    <div id="sun" class="animate"></div>
+    <div id="cloud" class="animate"></div>
+    <div id="bird" class="animate"></div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    const sun = document.getElementById('sun');
+    const cloud = document.getElementById('cloud');
+    const bird = document.getElementById('bird');
+    let clicked = false;
+    sun.addEventListener('click', function() {
+        if (!clicked) {
+            sun.style.animation = 'spin 2s linear infinite';
+            cloud.style.animation = 'float 1s ease-in-out infinite';
+            bird.style.animation = 'fly 2s ease-in-out infinite';
+            clicked = true;
+        } else {
+            sun.style.animation = '';
+            cloud.style.animation = '';
+            bird.style.animation = '';
+            clicked = false;
+        }
+    });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        });
+    </script>
+</body>
+</html>
