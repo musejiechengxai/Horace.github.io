@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title>Chapter 1. First WebGL Demo</title>
+  <!-- 顶点着色器和片元着色器代码 -->
+  <script id="vertex-shader" type="x-shader/x-vertex">
+			attribute vec4 vPosition;
+
+			void main(){
+				gl_Position = vPosition;
+			}
+
+  </script>
+  <script id="fragment-shader" type="x-shader/x-fragment">
+			precision mediump float;
+			varying vec4 fColor;
+			void main(){
+				gl_FragColor = vec4( 1.0, 1.0, 0.0, 1.0 );
+			}
+
+  </script>
+  <style>
+        canvas {
+            border: 1px solid black;
+            margin-top: 20px;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        .controls label {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+  <!-- 一组相关的JS库 -->
+  <script type="text/javascript" src="./js/webgl-utils.js"></script>
+  <script type="text/javascript" src="js/initShaders.js"></script>
+  <!-- 绘制三角形的JS代码 -->
+  <script type="text/javascript" src="./js/triangle.js"></script>
+</head>
+<body>
+<canvas id="triangle-canvas" style="border:none;" width="500" height="500"></canvas>
+
+    <div class="controls">
+        <label for="object-type">选择对象类型:</label>
+        <select id="object-type">
+            <option value="triangle">正三角形</option>
+            <option value="square">正方形</option>
+            <option value="cube">立方体</option>
+            <option value="circle">圆</option>
+        </select>
+
+        <label for="color-picker">选择颜色:</label>
+        <input type="color" id="color-picker">
+
+        <div id="triangle-controls">
+            <label for="triangle-speed">缩放速度:</label>
+            <input type="range" id="triangle-speed" min="0.5" max="2" step="0.1" value="1">
+        </div>
+
+        <div id="square-controls">
+            <label for="square-speed">旋转速度:</label>
+            <input type="range" id="square-speed" min="-0.1" max="0.1" step="0.01" value="0">
+        </div>
+
+        <div id="circle-controls">
+            <label for="circle-speed">平移速度:</label>
+            <input type="range" id="circle-speed" min="-0.1" max="0.1" step="0.01" value="0">
+            <label for="circle-sides">圆的边数:</label>
+            <input type="number" id="circle-sides" min="3" max="100" value="30">
+        </div>
+
+        <button id="clear-button">清空场景</button>
+    </div>
+</body>
+</html>
